@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HACKERHACK | Cyber Arena</title>
+<style>
+:root {
+ --bg:#080b10;
+ --panel:#101720;
+ --panel2:#151f2b;
+ --green:#00ff99;
+ --blue:#00baff;
+ --text:#e8f1f5;
+ --muted:#81909e;
+ --border:#253342;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+header{
+ height:65px;padding:0 5%;display:flex;align-items:center;
+ justify-content:space-between;border-bottom:1px solid var(--border);
+ background:#0b1119;position:sticky;top:0;z-index:5;
+}
+.logo{font-size:22px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--green)}
+nav{display:flex;gap:8px}
+.navbtn{
+ background:none;color:var(--muted);border:0;
+ padding:10px;font-size:13px
+}
+.navbtn.active,.navbtn:hover{color:var(--green)}
+button.primary{
+ background:var(--green);color:#06120c;border:0;
+ padding:12px 18px;border-radius:7px;font-weight:bold;
+}
+button.secondary{
+ background:var(--panel2);color:var(--text);
+ border:1px solid var(--border);padding:11px 15px;border-radius:7px;
+}
+button.danger{background:#4a1e27;color:#ff8193;border:0;padding:10px;border-radius:7px}
+.container{max-width:1150px;margin:auto;padding:30px 18px}
+.hero{
+ padding:45px 25px;background:linear-gradient(120deg,#10241f,#101b2c);
+ border:1px solid #234538;border-radius:13px;
+}
+.hero h1{font-size:clamp(32px,6vw,58px);margin:0 0 12px}
+.hero h1 span{color:var(--green)}
+.hero p{color:#aabac3;line-height:1.7;max-width:600px}
+.tag{color:var(--green);font-size:12px;letter-spacing:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.stat,.card{
+ background:var(--panel);border:1px solid var(--border);
+ border-radius:10px;padding:18px;
+}
+.stat strong{font-size:25px;color:var(--green);display:block}
+.stat small{color:var(--muted)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:30px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card h3{margin:8px 0}
+.card p{color:var(--muted);font-size:14px;line-height:1.6}
+.difficulty{font-size:11px;color:var(--green);background:#123529;padding:5px 8px;border-radius:5px}
+.difficulty.medium{color:#ffcf66;background:#3a3019}
+.difficulty.hard{color:#ff8595;background:#3d2028}
+.page{display:none}
+.page.active{display:block}
+.field{width:100%;padding:13px;margin:7px 0 15px;background:#080e15;color:white;border:1px solid var(--border);border-radius:7px;outline:none}
+.field:focus{border-color:var(--green)}
+label{font-size:13px;color:#aabac3}
+textarea.field{min-height:110px;resize:vertical}
+.challenge-box{
+ background:#080e15;border:1px solid var(--border);
+ border-radius:10px;padding:20px;margin-top:15px;
+}
+.terminal{
+ background:#05090d;border:1px solid #1b352c;padding:17px;
+ border-radius:8px;font-family:monospace;color:var(--green);
+ overflow-wrap:anywhere;line-height:1.8;
+}
+.flag{display:flex;gap:8px;margin-top:15px}
+.flag input{min-width:0;flex:1}
+table{width:100%;border-collapse:collapse}
+td,th{text-align:left;padding:13px;border-bottom:1px solid var(--border);font-size:13px}
+th{color:var(--muted)}
+.profile{display:flex;gap:15px;align-items:center}
+.avatar{
+ width:55px;height:55px;border-radius:12px;background:#173a2d;
+ display:grid;place-items:center;color:var(--green);font-size:23px;font-weight:bold
+}
+.notice{padding:13px;border-radius:7px;background:#15251f;color:var(--green);margin:12px 0;font-size:13px}
+footer{text-align:center;padding:30px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+.mobile-menu{display:none}
+@media(max-width:650px){
+ header{padding:0 12px}
+ nav{gap:0}
+ .navbtn{font-size:11px;padding:8px 5px}
+ .logo{font-size:17px}
+ .stats{gap:7px}
+ .stat{padding:12px}
+ .stat strong{font-size:20px}
+ .container{padding:20px 12px}
+ .hero{padding:30px 17px}
+ .flag{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">HACKER<span>HACK</span></div>
+ <nav>
+  <button class="navbtn active" onclick="showPage('home',this)">Home</button>
+  <button class="navbtn" onclick="showPage('challenges',this)">Challenges</button>
+  <button class="navbtn" onclick="showPage('leaderboard',this)">Ranks</button>
+  <button class="navbtn" onclick="showPage('profile',this)">Profile</button>
+ </nav>
+</header>
+
+<div class="container">
+
+<section id="home" class="page active">
+ <div class="hero">
+  <div class="tag">/// CYBERSECURITY COMPETITION</div>
+  <h1>HACK THE <span>CHALLENGE.</span></h1>
+  <p>Build challenges. Discover vulnerabilities. Test your skills. Compete against other players in a browser-based cybersecurity arena.</p>
+  <button class="primary" onclick="showPage('challenges')">Explore challenges →</button>
+  <button class="secondary" onclick="showPage('create')">Create challenge</button>
+ </div>
+
+ <div class="stats">
+  <div class="stat"><strong id="totalChallenges">3</strong><small>Challenges</small></div>
+  <div class="stat"><strong id="totalSolved">0</strong><small>Flags captured</small></div>
+  <div class="stat"><strong id="totalXP">0</strong><small>Your XP</small></div>
+ </div>
+
+ <div class="section-title">
+  <h2>Featured challenges</h2>
+  <button class="secondary" onclick="showPage('challenges')">View all</button>
+ </div>
+ <div id="featured" class="grid"></div>
+
+ <div class="section-title"><h2>How it works</h2></div>
+ <div class="grid">
+  <div class="card"><h3>01 / Create</h3><p>Build a safe browser-based challenge for other players.</p></div>
+  <div class="card"><h3>02 / Investigate</h3><p>Use Inspect Element, Console, Network and Sources to investigate the challenge.</p></div>
+  <div class="card"><h3>03 / Capture</h3><p>Discover the challenge flag and submit it to earn XP.</p></div>
+ </div>
+</section>
+
+<section id="challenges" class="page">
+ <div class="section-title">
+  <div><div class="tag">CYBER ARENA</div><h1>Challenges</h1></div>
+  <button class="primary" onclick="showPage('create')">+ Create</button>
+ </div>
+ <div id="challengeList" class="grid"></div>
+</section>
+
+<section id="detail" class="page">
+ <button class="secondary" onclick="showPage('challenges')">← Back</button>
+ <div id="challengeDetail"></div>
+</section>
+
+<section id="create" class="page">
+ <div class="tag">PLAYER CREATION</div>
+ <h1>Create a challenge</h1>
+ <p style="color:var(--muted)">Create a safe HTML inspection puzzle for other players.</p>
+ <div class="card">
+  <label>Challenge name</label>
+  <input id="newTitle" class="field" placeholder="Example: Hidden Message">
+  <label>Description / instructions</label>
+  <textarea id="newDescription" class="field" placeholder="Explain what players should investigate..."></textarea>
+  <label>Difficulty</label>
+  <select id="newDifficulty" class="field">
+   <option>Easy</option><option>Medium</option><option>Hard</option>
+  </select>
+  <label>XP reward</label>
+  <input id="newXP" type="number" min="10" max="500" value="100" class="field">
+  <label>Challenge HTML</label>
+  <textarea id="newHTML" class="field" placeholder="Paste your challenge HTML here..."></textarea>
+  <label>Correct flag</label>
+  <input id="newFlag" class="field" placeholder="HH{your_flag}">
+  <button class="primary" onclick="createChallenge()">Publish challenge</button>
+  <div id="createMessage"></div>
+ </div>
+ <div class="notice">Only publish harmless puzzles. Challenge HTML runs in a restricted sandbox and cannot access the main site's account information.</div>
+</section>
+
+<section id="leaderboard" class="page">
+ <div class="tag">GLOBAL COMPETITION</div>
+ <h1>Leaderboard</h1>
+ <div class="card">
+  <table>
+   <thead><tr><th>Rank</th><th>Player</th><th>XP</th></tr></thead>
+   <tbody id="leaderRows"></tbody>
+  </table>
+ </div>
+</section>
+
+<section id="profile" class="page">
+ <div class="tag">YOUR ACCOUNT</div>
+ <h1>Player profile</h1>
+ <div class="card">
+  <div class="profile">
+   <div class="avatar" id="avatar">?</div>
+   <div><h2 id="playerName">Guest</h2><small id="playerRank">Unranked player</small></div>
+  </div>
+  <hr style="border-color:var(--border);margin:20px 0">
+  <label>Display name</label>
+  <input class="field" id="nameInput" placeholder="Your username">
+  <button class="primary" onclick="saveName()">Save profile</button>
+  <p id="profileMessage"></p>
+  <div class="stats">
+   <div class="stat"><strong id="profileXP">0</strong><small>XP</small></div>
+   <div class="stat"><strong id="profileSolved">0</strong><small>Solved</small></div>
+   <div class="stat"><strong id="profileCreated">0</strong><small>Created</small></div>
+  </div>
+ </div>
+ <div class="card" style="margin-top:15px">
+  <h3>Account</h3>
+  <p>This prototype stores progress in this browser only. It does not yet have real accounts or shared multiplayer storage.</p>
+  <button class="danger" onclick="resetProgress()">Reset local progress</button>
+ </div>
+</section>
+
+</div>
+
+<footer>
+ HACKERHACK © 2026 · LEARN · EXPLORE · DEFEND
+ <br><br>Educational cybersecurity challenges only.
+</footer>
+
+<script>
+const defaultChallenges = [
+ {
+  id:1,title:"Hidden HTML Message",difficulty:"Easy",xp:100,
+  description:"Something interesting is hidden in this page's HTML. Inspect the source and find the flag.",
+  html:'<h2>Welcome hacker!</h2><p>There is nothing interesting here...</p><!-- HH{inspect_the_source} -->',
+  flag:"HH{inspect_the_source}",author:"HACKERHACK"
+ },
+ {
+  id:2,title:"Console Clue",difficulty:"Medium",xp:200,
+  description:"Investigate the page and look for a clue in the browser console.",
+  html:'<h2>System status: ONLINE</h2><p>Check your browser developer tools.</p><script>console.log("HH{console_detective}");<\/script>',
+  flag:"HH{console_detective}",author:"HACKERHACK"
+ },
+ {
+  id:3,title:"Network Detective",difficulty:"Hard",xp:300,
+  description:"Inspect the network activity generated by this challenge. Find the clue in the page's resources.",
+  html:'<h2>Resource loaded</h2><p>Investigate the challenge files.</p><script>console.log("Resource clue: HH{network_detective}");<\/script>',
+  flag:"HH{network_detective}",author:"HACKERHACK"
+ }
+];
+
+let challenges = JSON.parse(localStorage.getItem("hh_challenges") || "null") || defaultChallenges;
+let solved = JSON.parse(localStorage.getItem("hh_solved") || "[]");
+let xp = Number(localStorage.getItem("hh_xp") || 0);
+let username = localStorage.getItem("hh_username") || "Guest";
+let currentId = null;
+
+function save(){
+ localStorage.setItem("hh_challenges",JSON.stringify(challenges));
+ localStorage.setItem("hh_solved",JSON.stringify(solved));
+ localStorage.setItem("hh_xp",xp);
+ localStorage.setItem("hh_username",username);
+}
+
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ render();
+ window.scrollTo(0,0);
+}
+
+function render(){
+ document.getElementById("totalChallenges").textContent=challenges.length;
+ document.getElementById("totalSolved").textContent=solved.length;
+ document.getElementById("totalXP").textContent=xp;
+ document.getElementById("playerName").textContent=username;
+ document.getElementById("avatar").textContent=username[0].toUpperCase();
+ document.getElementById("nameInput").value=username;
+ document.getElementById("profileXP").textContent=xp;
+ document.getElementById("profileSolved").textContent=solved.length;
+ document.getElementById("profileCreated").textContent=challenges.filter(c=>c.author===username).length;
+ document.getElementById("playerRank").textContent=xp>=500?"Elite Hacker":xp>=200?"Cyber Explorer":"Beginner";
+ const cards=challenges.map(c=>`
+ <div class="card">
+ <span class="difficulty ${c.difficulty.toLowerCase()}">${c.difficulty}</span>
+ <h3>${escapeHTML(c.title)}</h3>
+ <p>${escapeHTML(c.description)}</p>
+ <p>⚡ ${c.xp} XP · By ${escapeHTML(c.author)}</p>
+ <button class="primary" onclick="openChallenge(${c.id})">${solved.includes(c.id)?"Solved ✓":"Play challenge →"}</button>
+ </div>`).join("");
+ document.getElementById("challengeList").innerHTML=cards;
+ document.getElementById("featured").innerHTML=cards;
+ const ranks=[{name:username,xp}, {name:"CyberFox",xp:850},{name:"ByteHunter",xp:620},{name:"NullPointer",xp:410}];
+ ranks.sort((a,b)=>b.xp-a.xp);
+ document.getElementById("leaderRows").innerHTML=ranks.map((r,i)=>`<tr><td>#${i+1}</td><td>${escapeHTML(r.name)}</td><td>${r.xp} XP</td></tr>`).join("");
+}
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function openChallenge(id){
+ currentId=id;
+ const c=challenges.find(x=>x.id===id);
+ if(!c)return;
+ showPage("detail");
+ document.getElementById("challengeDetail").innerHTML=`
+ <div class="tag">CHALLENGE #${c.id}</div>
+ <h1>${escapeHTML(c.title)}</h1>
+ <span class="difficulty ${c.difficulty.toLowerCase()}">${c.difficulty}</span>
+ <p style="color:var(--muted)">${escapeHTML(c.description)}</p>
+ <p>Reward: <b style="color:var(--green)">${c.xp} XP</b></p>
+ <div class="challenge-box">
+ <h3>Challenge environment</h3>
+ <iframe sandbox="allow-scripts" title="Challenge preview"
+ style="width:100%;height:260px;background:white;border:0;border-radius:7px"
+ srcdoc="${escapeHTML(c.html)}"></iframe>
+ </div>
+ <div class="notice">Use your browser's Inspect Element and Developer Tools to investigate this puzzle.</div>
+ <h3>Submit discovered flag</h3>
+ <div class="flag">
+ <input id="flagInput" class="field" placeholder="HH{your_discovered_flag}">
+ <button class="primary" onclick="submitFlag()">Submit flag</button>
+ </div>
+ <p id="flagMessage"></p>
+ `;
+}
+
+function submitFlag(){
+ const c=challenges.find(x=>x.id===currentId);
+ const value=document.getElementById("flagInput").value.trim();
+ const msg=document.getElementById("flagMessage");
+ if(solved.includes(c.id)){msg.textContent="Already solved!";return}
+ if(value===c.flag){
+  solved.push(c.id);xp+=Number(c.xp);save();
+  msg.innerHTML='<span style="color:#00ff99">✓ FLAG CAPTURED! +' + c.xp + ' XP</span>';
+  render();
+ }else{
+  msg.innerHTML='<span style="color:#ff8195">Incorrect flag. Keep investigating!</span>';
+ }
+}
+
+function createChallenge(){
+ const title=document.getElementById("newTitle").value.trim();
+ const description=document.getElementById("newDescription").value.trim();
+ const html=document.getElementById("newHTML").value;
+ const flag=document.getElementById("newFlag").value.trim();
+ const difficulty=document.getElementById("newDifficulty").value;
+ const reward=Math.min(500,Math.max(10,Number(document.getElementById("newXP").value)||100));
+ const msg=document.getElementById("createMessage");
+ if(!title||!description||!html||!flag){
+  msg.textContent="Please fill in all fields.";return;
+ }
+ if(html.length>20000){
+  msg.textContent="Challenge HTML is too large (20 KB maximum).";return;
+ }
+ challenges.push({id:Date.now(),title,description,html,flag,difficulty,xp:reward,author:username});
+ save();
+ msg.innerHTML='<span style="color:#00ff99">Challenge created successfully!</span>';
+ render();
+}
+
+function saveName(){
+ const value=document.getElementById("nameInput").value.trim();
+ if(!value||value.length>20){
+  document.getElementById("profileMessage").textContent="Username must be 1–20 characters.";
+  return;
+ }
+ username=value;save();render();
+ document.getElementById("profileMessage").textContent="Profile updated!";
+}
+
+function resetProgress(){
+ if(!confirm("Reset your local progress?"))return;
+ solved=[];xp=0;save();render();
+}
+
+render();
+</script>
+</body>
+</html>
